@@ -16,9 +16,14 @@ public class PrincipalDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    // security session (내부 Authentication (내부 UserDetails))
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        System.out.println("username : " + username);
+        User userEntity = userRepository.findByUsername(username);
+        if (userEntity != null) {
+            return new PrincipalDetails(userEntity);
+        }
         return null;
     }
 }

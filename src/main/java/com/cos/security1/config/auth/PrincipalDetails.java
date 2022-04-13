@@ -9,13 +9,17 @@ package com.cos.security1.config.auth;
 // Security Session => Authentication => UserDetails
 
 import com.cos.security1.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user; // 콤포지션
 
@@ -53,12 +57,12 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -67,5 +71,15 @@ public class PrincipalDetails implements UserDetails {
         // 현재 시간 - 로그인 시간 => 1년 초과하면 return false
 
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
     }
 }
